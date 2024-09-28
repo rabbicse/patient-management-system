@@ -26,6 +26,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <Image src="/assets/images/patient-banner.png" alt="Patient Banner" height={1000} width={1000} className="side-img max-w-[50%]" />
     </div>
   );
 }
