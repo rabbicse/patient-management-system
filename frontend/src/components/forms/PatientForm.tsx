@@ -9,6 +9,7 @@ import SubmitButton from "../SubmitButton";
 import { useState } from "react";
 import { UserFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
+import { createUser } from "@/lib/actions/patient.actions";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -17,19 +18,21 @@ const formSchema = z.object({
 });
 
 const PatientForm = () => {
-    const router = useRouter();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof UserFormValidation>>({
+    resolver: zodResolver(UserFormValidation),
     defaultValues: {
-      username: "",
+      name: "",
+      email: "",
+      phone: "",
     },
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof UserFormValidation>) {
+  const onSubmit = async (values: z.infer<typeof UserFormValidation>) => {
+    console.log("On submit...");
     setIsLoading(true);
 
     try {
@@ -38,16 +41,16 @@ const PatientForm = () => {
         email: values.email,
         phone: values.phone,
       };
-      
+
       const user = await createUser(userData);
 
-      if(user) router.push(`/patients/${user.$id}/register`)
+      if (user) router.push(`/patients/${user.$id}/register`);
     } catch (error) {
       console.log(error);
     }
 
-    setIsLoading(false);
-  }
+    // setIsLoading(false);
+  };
 
   return (
     <Form {...form}>
