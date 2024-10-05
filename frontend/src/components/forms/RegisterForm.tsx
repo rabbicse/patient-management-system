@@ -23,7 +23,7 @@ import { PatientFormValidation } from "@/lib/validation";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-phone-number-input/style.css";
 import CustomFormField, { FormFieldType } from "../CustomFormField";
-// import { FileUploader } from "../FileUploader";
+import { FileUploader } from "@/components/FileUploader";
 import SubmitButton from "../SubmitButton";
 
 const RegisterForm = ({ user }: { user: User }) => {
@@ -60,12 +60,12 @@ const RegisterForm = ({ user }: { user: User }) => {
 
     try {
       const patient = {
-        userId: user.$id,
+        userId: "123456", //user.$id,
         name: values.name,
         email: values.email,
         phone: values.phone,
         birthDate: new Date(values.birthDate),
-        gender: values.gender,
+        gender: "male",
         address: values.address,
         occupation: values.occupation,
         emergencyContactName: values.emergencyContactName,
@@ -333,7 +333,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             placeholder="123456789"
           />
 
-          {/* <CustomFormField
+          <CustomFormField
             fieldType={FormFieldType.SKELETON}
             control={form.control}
             name="identificationDocument"
@@ -343,7 +343,7 @@ const RegisterForm = ({ user }: { user: User }) => {
                 <FileUploader files={field.value} onChange={field.onChange} />
               </FormControl>
             )}
-          /> */}
+          />
         </section>
 
         <section className="space-y-6">
